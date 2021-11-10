@@ -2,7 +2,8 @@ import os
 import pandas as pd
 
 class DataGroup:
-
+    '''Read and store all data files from a specific folder with pandas'''
+    
     reader = {'csv': pd.read_csv,
             'xls': pd.read_excel,
             'xlsx': pd.read_excel}
@@ -29,11 +30,13 @@ class DataGroup:
         self.check_main_table = False
 
     def set_main_table(self, fname):
+        '''Set a main table in a global table'''
         self.main_table = self[fname]
         self.assembled_data = self.main_table.copy()
         self.check_main_table = True
 
     def join(self, fname, column):
+        '''Join a table with the global table'''
         if not self.check_main_table:
             raise Exception('No main table is set. Use set_main_table method.')
 
