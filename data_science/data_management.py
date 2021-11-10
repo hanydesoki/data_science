@@ -60,4 +60,46 @@ class DataGroup:
 
     def __repr__(self):
         return f"{self.__class__.__name__}(data_folder={self.data_folder}, extension='{self.extension}')"
+    
+    
+    
+class ImageData:
+    '''
+    Load a csv_file and associate it with an image folder
+    '''
+    def __init__(self, csv_file, images_folder):
+        self.csv_file = csv_file
+        self.images_folder = images_folder
+        self.__original_data = pd.read_csv(csv_file)
+        self.data = self.__original_data.copy()
 
+    def show_image(self, index, image_name_column="image"):
+        '''
+        Show an image
+        '''
+        title = self.data.loc[index, 'product_name']
+        image = plt.imread(os.path.join(self.images_folder, self.data.loc[index, image_name_column]))
+        m, n = image.shape[0], image.shape[1]
+        plt.imshow(image)
+        print('image size:', f'{m}x{n} pixels')
+        plt.title(title)
+        plt.show()
+        print(self.data.loc[index, :])
+
+
+    def get_data(self):
+        """
+        Return the actual data
+        """
+        return self.data
+
+    def get_original_data(self):
+        """
+        Return the original data
+        """
+        return self.__original_data
+    
+    def __repr__(self):
+        return f"""{self.__class__.__name__}(csv_file='{self.csv_file}', images_folder='{self.images_folder}')
+        {self.data.shape[0]} rows, {self.data.shape[1]} columns
+        """
