@@ -88,7 +88,7 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
         return f"{self.__class__.__name__}(return_array={self.return_array})"
     
 class FillImputer(TransformerMixin, BaseEstimator):
-    '''Imputer class that will fill with different strategy depending on the column type'''
+    '''Imputer class that will fill with different strategy depending on the column type. Work with pandas DataFrame only'''
     def __init__(self):
         self.initialisation()
 
