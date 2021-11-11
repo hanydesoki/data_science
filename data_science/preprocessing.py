@@ -86,3 +86,33 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
 
     def __repr__(self):
         return f"{self.__class__.__name__}(return_array={self.return_array})"
+    
+class FillImputer(TransformerMixin, BaseEstimator):
+    '''Imputer class that will fill with different strategy depending on the column type'''
+    def __init__(self):
+        self.initialisation()
+
+    def initialisation(self):
+        self.fill_code = {}
+
+    def fit(self, df, y=None):
+        for col in df.columns:
+            if df[col].dtype in ['object', 'category', 'bool']:
+                value = df[col].value_counts(ascending=False).index[0]
+
+            else:
+                value = df[col].median()
+
+            self.fill_code[col] = value
+        
+        return self
+
+    def transform(self, df):
+        df_filled = df.copy()
+        for col in df_filled.columns:
+            df_filled[col].fillna(self.fill_code[col], inplace=True)
+
+        return df_filled
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}()"
