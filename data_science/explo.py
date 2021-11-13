@@ -61,7 +61,7 @@ def plot_map(df, y_name, figsize=(12, 10), lat_long=('Long', 'Lat'), boundaries=
 
 
 def plot_map_categ(df, categ_column, figsize=(12, 10), lat_long=('Long', 'Lat'), boundaries=None, alpha=1):
-     '''Get a geographical representation of all data points (with scatter) based on coordinates columns with a category associated
+    '''Get a geographical representation of all data points (with scatter) based on coordinates columns with a category associated
 
             Parameters:
                     df (DataFrame): A DataFrame
@@ -83,7 +83,7 @@ def plot_map_categ(df, categ_column, figsize=(12, 10), lat_long=('Long', 'Lat'),
 
 def corr_matrix(df, figsize=(30, 20), maptype='heatmap', absolute=False, crit_value=None,
                 annot=True, save=False, filename='corr_matrix'):
-     '''Plot the correlation matrix with seaborn of the DataFrame
+    '''Plot the correlation matrix with seaborn of the DataFrame
 
             Parameters:
                     df (DataFrame): A DataFrame
