@@ -8,3 +8,4 @@ A package with usefull tools for data scientists
   - utils: Miscellanous tools
   - data_management: Classes for loading some data with some easy navigations
   - maths: Vector class
+  - evaluations; fast eval funcs
