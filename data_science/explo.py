@@ -26,6 +26,7 @@ def boxplot_groupes(df, categ_column, target_column, figsize=(20, 10)):
                 vert=False, patch_artist=True, showmeans=True, meanprops=meanprops)
     plt.ylabel(categ_column)
     plt.title(target_column)
+    plt.show()
 
 
 def plot_map(df, y_name, figsize=(12, 10), lat_long=('Long', 'Lat'), boundaries=None, interquartile=True, alpha=1):
@@ -58,6 +59,7 @@ def plot_map(df, y_name, figsize=(12, 10), lat_long=('Long', 'Lat'), boundaries=
     plt.xlabel(lat_long[0])
     plt.ylabel(lat_long[1])
     plt.colorbar(points)
+    plt.show()
 
 
 def plot_map_categ(df, categ_column, figsize=(12, 10), lat_long=('Long', 'Lat'), boundaries=None, alpha=1):
@@ -79,6 +81,7 @@ def plot_map_categ(df, categ_column, figsize=(12, 10), lat_long=('Long', 'Lat'),
         plt.xlim(boundaries[0])
         plt.ylim(boundaries[1])
     plt.legend()
+    plt.show()
 
 
 def corr_matrix(df, figsize=(30, 20), maptype='heatmap', absolute=False, crit_value=None,
@@ -110,3 +113,4 @@ def corr_matrix(df, figsize=(30, 20), maptype='heatmap', absolute=False, crit_va
 
     if save:
         plt.savefig(filename)
+    plt.show()
