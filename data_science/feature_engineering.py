@@ -32,3 +32,10 @@ def weights_sum(values, weights=None):
         raise IndexError(f'values ({a}) and weights ({b}) must be same lenght')
 
     return sum([v * w for v, w in zip(values, weights)])
+
+
+def digitin(string):
+    for char in string:
+        if char.isdigit():
+            return True
+    return False
