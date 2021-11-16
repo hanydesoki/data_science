@@ -57,3 +57,9 @@ def timer(function_to_time):
 
     return timed_function # Return the timed function
 
+def join_paths(*paths):
+    full_path = paths[0]
+    for p in paths[1:]:
+        full_path = os.path.join(full_path, p)
+
+    return full_path
