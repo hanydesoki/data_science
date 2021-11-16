@@ -114,3 +114,59 @@ def corr_matrix(df, figsize=(30, 20), maptype='heatmap', absolute=False, crit_va
     if save:
         plt.savefig(filename)
     plt.show()
+    
+    
+class MultiDimVizualisation:
+
+    '''Class for a 2D representation of a multidimensional dataset with PCA'''
+
+    def __init__(self, transformer=None):
+        self.transformer = transformer
+        if transformer is None:
+            self.pca_vizualisation = PCA(n_components=2)
+        else:
+            self.steps = [('transformer', transformer), ('pca', PCA(n_components=2))]
+            self.pca_vizualisation = Pipeline(steps=self.steps)
+
+        self.__isfitted = False
+
+    def fit(self, X):
+        self.pca_vizualisation.fit(X)
+        self.__isfitted = True
+
+        return self
+
+    def transform_plot(self, X, y=None, figsize=(8, 6), title='2D representation of data', save=False, filename='data_2d.jpeg', **kwargs):
+        self.check_isfitted()
+
+        X_reduced = self.pca_vizualisation.transform(X)
+
+        plt.figure(figsize=figsize)
+        plt.scatter(X_reduced[:,0], X_reduced[:,1], c=y, **kwargs)
+
+        plt.xlabel('PC0')
+        plt.ylabel('PC1')
+        plt.colorbar()
+        plt.title(title)
+        plt.show()
+
+        if save:
+            plt.savefig(filename)
+
+        return X_reduced
+
+    def fit_transform_plot(self, X, y=None, figsize=(8, 6), title='2D representation of data', save=False, filename='data_2d.jpeg', **kwargs):
+        return self.fit(X).transform_plot(X, y=y, figsize=figsize, title=title, save=save, filename=filename, **kwargs)
+
+    def get_transformer(self):
+        return self.transformer
+
+    def get_full_pipeline(self):
+        return self.pca_vizualisation
+
+    def check_isfitted(self):
+        if not self.__isfitted:
+            raise Exception(f'{self.__name__} not fitted yet.')
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(transformer={self.transformer})"
