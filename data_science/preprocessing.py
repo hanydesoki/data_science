@@ -1,5 +1,6 @@
-import pandas
+import pandas as pd
 from sklearn.base import TransformerMixin, BaseEstimator
+import numpy as np
 from warnings import warn
 
 class DfEncoderOneHot(TransformerMixin, BaseEstimator):
