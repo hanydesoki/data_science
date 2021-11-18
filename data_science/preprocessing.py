@@ -116,3 +116,21 @@ class FillImputer(TransformerMixin, BaseEstimator):
 
     def __repr__(self):
         return f"{self.__class__.__name__}()"
+    
+class Log(TransformerMixin, BaseEstimator):
+    '''Logarithme transformer. Used for a pipeline'''
+    def __init__(self, eps=0.01):
+        self.eps = eps
+
+    def fit(self, X=None, y=None):
+        return self
+
+    def transform(self, X):
+        X_log = X.copy()
+        mask = X_log <= 0
+        X_log[mask] = self.eps
+
+        return np.log(X_log)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(eps={self.eps})"
