@@ -84,7 +84,7 @@ class Vect:
 
     def __repr__(self):
         args = ', '.join([str(x) for x in self.args])
-        return f"{self.__class__}({args})"
+        return f"{self.__class__.__name__}({args})"
 
     @staticmethod
     def angle(u, v):
