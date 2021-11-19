@@ -34,7 +34,7 @@ class Vect:
         else:
             args = [i + v for i in self.args]
 
-        return Vect(*args)
+        return self.__class__(*args)
 
     def __sub__(self, v):
         self.check_instance(v)
@@ -45,7 +45,7 @@ class Vect:
         else:
             args = [i - v for i in self.args]
 
-        return Vect(*args)
+        return self.__class__(*args)
 
     def __mul__(self, v):
         self.check_instance(v)
@@ -56,7 +56,7 @@ class Vect:
         else:
             args = [i * v for i in self.args]
 
-        return Vect(*args)
+        return self.__class__(*args)
 
     def __len__(self):
         return len(self.args)
@@ -84,7 +84,7 @@ class Vect:
 
     def __repr__(self):
         args = ', '.join([str(x) for x in self.args])
-        return f"Vect({args})"
+        return f"{self.__class__}({args})"
 
     @staticmethod
     def angle(u, v):
