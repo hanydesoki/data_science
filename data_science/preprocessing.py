@@ -8,8 +8,9 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
      Encoding with 0 and 1 all categorical columns with only 2 classes and 
      do a one hot encoding with the other categorical columns.
      Compatible with sklearn pipelines.'''
-    def __init__(self, return_array=False):
+    def __init__(self, nan_as_category=False, return_array=False):
         self.return_array = return_array
+        self.nan_as_category = nan_as_category
         self.initialisation()
 
     def initialisation(self):
@@ -26,7 +27,11 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
         self.original_categorical_columns += list(df.select_dtypes('object')) + list(df.select_dtypes('category')) + list(df.select_dtypes('bool'))
 
         for col in self.original_categorical_columns:
-            classes = list(df[col].dropna().unique())
+            if self.nan_as_category:
+                classes = list(df[col].unique())
+            else:
+                classes = list(df[col].dropna().unique())
+
             if len(classes) == 2:
                 if df[col].dtype == 'bool':
                     code = {False: 0.0, True: 1.0}
@@ -41,7 +46,10 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
                 self.encoded_columns.append(col)
             else:
                 for c in self.other_categorical_columns[col]:
-                    self.encoded_columns.append(f'{col}_{c}') 
+                    if pd.isnull(c):
+                        self.encoded_columns.append(f'{col}_na')
+                    else:
+                        self.encoded_columns.append(f'{col}_{c}') 
               
         return self
 
@@ -58,7 +66,10 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
 
         for col, classes in self.other_categorical_columns.items():
             for c in classes:
-                df_encoded[f'{col}_{c}'] = (df[col] == c).astype('float')
+                if pd.isnull(c):
+                    df_encoded[f'{col}_na'] = (df[col].isna()).astype('float')
+                else:   
+                    df_encoded[f'{col}_{c}'] = (df[col] == c).astype('float')
 
             del df_encoded[col]
 
@@ -85,8 +96,11 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
     def get_encoded_columns(self):
         return self.encoded_columns
 
+    def get_new_columns(self):
+        return [col for col in self.get_encoded_columns() if col not in self.get_original_columns()]
+
     def __repr__(self):
-        return f"{self.__class__.__name__}(return_array={self.return_array})"
+        return f"{self.__class__.__name__}(nan_as_category={self.nan_as_category}, return_array={self.return_array})"
     
 class FillImputer(TransformerMixin, BaseEstimator):
     '''Imputer class that will fill with different strategy depending on the column type. Work with pandas DataFrame only'''
