@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 
 def boxplot_groupes(df, categ_column, target_column, figsize=(20, 10)):
