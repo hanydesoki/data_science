@@ -116,7 +116,10 @@ class FillImputer(TransformerMixin, BaseEstimator):
                 value = df[col].value_counts(ascending=False).index[0]
 
             else:
-                value = df[col].median()
+                if df[col].isna().mean() == 1:
+                    value = 0
+                else:
+                    value = df[col].median(
 
             self.fill_code[col] = value
         
