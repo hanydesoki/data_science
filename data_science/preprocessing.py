@@ -21,6 +21,8 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
         self.encoded_columns = []
 
     def fit(self, df, y=None):
+        
+        self.initialisation()
 
         self.original_columns = list(df.columns)
 
