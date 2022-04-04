@@ -73,7 +73,7 @@ class DfEncoderOneHot(TransformerMixin, BaseEstimator):
 
             del df_encoded[col]
 
-        df_encoded.columns = self.encoded_columns
+        df_encoded = df_encoded[self.encoded_columns]
 
         if self.return_array:
             df_encoded = df_encoded.values
