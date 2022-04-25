@@ -118,7 +118,7 @@ def corr_matrix(df, figsize=(30, 20), maptype='heatmap', absolute=False, crit_va
     plt.show()
     
     
-class MultiDimVizualisation:
+class MultiDimVisualization:
 
     '''Class for a 2D representation of a multidimensional dataset with PCA'''
 
@@ -168,7 +168,7 @@ class MultiDimVizualisation:
 
     def check_isfitted(self):
         if not self.__isfitted:
-            raise Exception(f'{self.__name__} not fitted yet.')
+            raise Exception(f'{self.__class__.__name__} not fitted yet.')
 
     def __repr__(self):
         return f"{self.__class__.__name__}(transformer={self.transformer})"
